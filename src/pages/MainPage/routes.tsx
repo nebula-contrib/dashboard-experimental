@@ -15,8 +15,15 @@ import DiskDetail from '@/pages/MachineDashboard/Detail/DiskDetail';
 import NetworkDetail from '@/pages/MachineDashboard/Detail/NetworkDetail';
 import MemoryDetail from '@/pages/MachineDashboard/Detail/MemoryDetail';
 import MetricDetail from '@/pages/MetricDetail';
+import BigScreen from '@/pages/BigScreen';
 
 export const MenuList = [
+  {
+    key: 'big-screen',
+    title: 'Big Screen',
+    icon: '#iconnav-dashboard',
+    path: '/big-screen',
+  },
   {
     key: 'machine',
     title: intl.get('device.title'),
@@ -144,6 +151,25 @@ const SERVICE_VIEWS = [
 ];
 
 export const RoutesList: any = [
+  {
+    path: '/big-screen',
+    component: BigScreen,
+    exact: true,
+    headerConfig: {
+      breadcrumb: [
+        {
+          path: '#',
+          breadcrumbName: intl.get('common.dashboard'),
+        },
+        {
+          path: '/machine/big-screen',
+          breadcrumbName: intl.get('device.big-screen'),
+        },
+      ],
+      showBackBtn: true,
+      title: intl.get('device.big-screen'),
+    },
+  },
   {
     path: '/machine/overview',
     component: MachineDashboard,
