@@ -2,7 +2,7 @@ import { Line } from '@ant-design/plots';
 import './index.less';
 import React from 'react';
 
-const LineChart = (props: any) => {
+const BigLineChart = (props: any) => {
   const { data, length = 150 } = props
 
   const WIDTH = length;
@@ -13,8 +13,8 @@ const LineChart = (props: any) => {
     height: HEIGHT,
     // autoFit: true,
     padding: 20,
-    xField: 'Date',
-    yField: 'scales',
+    xField: 'time',
+    yField: 'value',
     xAxis: {
       // type: 'timeCat',
       tickCount: 5,
@@ -33,4 +33,4 @@ const LineChart = (props: any) => {
     </div>);
 };
 
-export default LineChart
+export default BigLineChart

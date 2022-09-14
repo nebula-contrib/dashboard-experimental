@@ -1,6 +1,6 @@
 import './index.less'
 import React, { useEffect, useState, useRef } from 'react';
-import LineChart from '../../widgets/LineChart';
+import BigLineChart from '../../widgets/BigLineChart';
 import { LineChartProps } from '../../utils/interface';
 
 function addEdgeLantency(props: LineChartProps) {
@@ -8,7 +8,7 @@ function addEdgeLantency(props: LineChartProps) {
 
     // Have to wrap a <div> ajacent the LineChart, or it will be the same size of its ajacent div
     return <div className='storage-metrics-chart-card'>
-        <LineChart data={data}></LineChart>
+        <BigLineChart data={data}></BigLineChart>
     </div>
 }
 
@@ -16,7 +16,7 @@ function addVerticsLantency(props: LineChartProps) {
     const { data, length = 260 } = props;
 
     return <div className='storage-metrics-chart-card'>
-        <LineChart data={data}></LineChart>
+        <BigLineChart data={data}></BigLineChart>
     </div>
 }
 
@@ -44,10 +44,10 @@ function StorageMetrics(props: any) {
                 StorageMetrics
             </div>
             <div className='storage-metrics-chart-card'>
-                <LineChart data={data}></LineChart>
+                <BigLineChart data={data}></BigLineChart>
             </div>
             <div className='storage-metrics-chart-card'>
-                <LineChart data={data}></LineChart>
+                <BigLineChart data={data}></BigLineChart>
             </div>
         </div>
     )

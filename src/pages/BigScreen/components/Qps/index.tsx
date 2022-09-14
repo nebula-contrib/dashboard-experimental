@@ -1,6 +1,6 @@
 import "./index.less";
 import React, { useState, useEffect } from 'react';
-import LineChart from '../../widgets/LineChart';
+import BigLineChart from '../../widgets/BigLineChart';
 
 export default function Qps(props: any) {
     // Can't set the width, or it won't be the column width.
@@ -23,7 +23,7 @@ export default function Qps(props: any) {
     return (
         <div className="qps-main" style={style}>
             <div className='qps-title'>QPS</div>
-            <div className='qps-chart'><LineChart data={data}/></div>
+            <div className='qps-chart'><BigLineChart data={data}/></div>
         </div>
     )
 } 

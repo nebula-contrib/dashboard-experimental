@@ -1,5 +1,5 @@
 import './index.less';
-import LineChart from '../../widgets/LineChart';
+import BigLineChart from '../../widgets/BigLineChart';
 import React, { useState, useEffect } from 'react';
 
 
@@ -26,17 +26,17 @@ function GraphMetrics() {
       {/* 这里column chart的height总是inherit不知道是在哪里设置的，查了很多文档没有找到*/}
       {/* 下面是个有点丑的解决办法 */}
       <div className='graph-metrics-chart-card'>
-        <LineChart data={data}>activeSessionNums</LineChart>
+        <BigLineChart data={data}>activeSessionNums</BigLineChart>
       </div>
 
       <div className='graph-metrics-chart-card'>
-        <LineChart data={data}>activeQueryNums</LineChart>
+        <BigLineChart data={data}>activeQueryNums</BigLineChart>
       </div>
       <div className='graph-metrics-chart-card'>
-        <LineChart data={data}>slowQueryPercentage</LineChart>
+        <BigLineChart data={data}>slowQueryPercentage</BigLineChart>
       </div>
       <div className='graph-metrics-chart-card'>
-        <LineChart data={data}>errorQueryPercentage</LineChart>
+        <BigLineChart data={data}>errorQueryPercentage</BigLineChart>
       </div>
 
 
