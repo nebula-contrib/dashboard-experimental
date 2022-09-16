@@ -1,14 +1,29 @@
 import dayjs from 'dayjs';
 import _ from 'lodash';
+import semver from 'semver';
+import cookies from 'js-cookie';
+
 import { ILineChartMetric, IStatRangeItem, MetricScene } from '@/utils/interface';
 import { VALUE_TYPE } from '@/utils/promQL';
+
+// used in nightly version;
+export const DEFAULT_VERSION = process.env.NEBULA_VERSION!;
 
 export const DETAIL_DEFAULT_RANGE = 60 * 60 * 24 * 1000;
 export const CARD_RANGE = 60 * 60 * 24 * 1000;
 export const CARD_POLLING_INTERVAL = 10000 * 1000;
 export const MAX_STEP_ALLOW = 11000;
 export const TIME_INTERVAL_OPTIONS = [5, 60, 600, 3600];
-export const AGGREGATION_OPTIONS = ['sum', 'rate', 'avg', 'p75', 'p95', 'p99', 'p999'];
+export enum AggregationType {
+  Sum = 'sum',
+  Rate = 'rate',
+  Avg = 'avg',
+  P75 = 'p75',
+  P95 = 'p95',
+  P99 = 'p99',
+  P999 = 'p999',
+}
+export const AGGREGATION_OPTIONS = Object.values(AggregationType);
 
 export const THRESHOLDS = {
   low: 60,
@@ -403,6 +418,16 @@ export const getConfigData=(data)=>{
     }
   })
   return list;
+}
+
+export function formatVersion(version?: string): string {
+  if (!version) {
+    version = cookies.get('version');
+  }
+  if (semver.valid(version)) {
+    return semver.clean(version!) ?? DEFAULT_VERSION;
+  }
+  return DEFAULT_VERSION;
 }
 
 export let getMachineRouterPath = (path: string, id?): string => `/clusters/${id}${path}`;
