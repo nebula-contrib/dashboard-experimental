@@ -15,8 +15,8 @@ import { calcTimeRange } from '@/utils/dashboard';
 import { SUPPORT_METRICS } from '@/utils/promQL';
 
 const mapDispatch: any = (dispatch: any) => ({
-  asyncGetCPUStateByRange: dispatch.machine.asyncGetCPUStateByRange,
-  asyncGetMemoryStateByRange: dispatch.machine.asyncGetMemoryStateByRange,
+  asyncGetCPUStateByRange: dispatch.machine.asyncGetCPUStatByRange,
+  asyncGetMemoryStateByRange: dispatch.machine.asyncGetMemoryStatByRange,
   asyncGetLoadByRange: dispatch.machine.asyncGetLoadByRange,
   updateMetricsFiltervalues: dispatch.machine.updateMetricsFiltervalues,
 });
@@ -35,7 +35,7 @@ interface IProps
 let pollingTimer: any;
 
 function BigScreen(props: IProps) {
-  const { asyncGetCPUStateByRange, asyncGetDiskStateByRange, asyncGetLoadByRange, updateMetricsFiltervalues,
+  const { asyncGetCPUStateByRange, asyncGetMemoryStateByRange, asyncGetLoadByRange, updateMetricsFiltervalues,
     metricsFilterValues, loading,
     cluster,
   } = props;
@@ -43,9 +43,9 @@ function BigScreen(props: IProps) {
   //* Set the shouldRender state
   const [shouldRender, setShouldRender] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   setShouldRender(loading && metricsFilterValues.frequency === 0);
-  // }, [loading, metricsFilterValues.frequency]);
+  useEffect(() => {
+    setShouldRender(loading && metricsFilterValues.frequency === 0);
+  }, [loading, metricsFilterValues.frequency]);
 
   // * Get MonitorScreen's height
   const monitorScreenRef = useRef<any>(null);
@@ -69,15 +69,15 @@ function BigScreen(props: IProps) {
   // }, [])
 
   //* Get the redux-state data
-  // useEffect(() => {
-  //   getMachineStatus();
+  useEffect(() => {
+    getMachineStatus();
 
-  //   return () => { // Clear the pollingTimer after component unmounted
-  //     if (pollingTimer) {
-  //       clearTimeout(pollingTimer);
-  //     }
-  //   }
-  // }, [cluster]);
+    return () => { // Clear the pollingTimer after component unmounted
+      if (pollingTimer) {
+        clearTimeout(pollingTimer);
+      }
+    }
+  }, [cluster]);
 
   const getMachineStatus = () => {
     const [start, end] = calcTimeRange(metricsFilterValues.timeRange);
@@ -87,7 +87,7 @@ function BigScreen(props: IProps) {
       metric: SUPPORT_METRICS.cpu[0].metric,
       clusterID: cluster?.id
     });
-    asyncGetDiskStateByRange({
+    asyncGetMemoryStateByRange({
       start,
       end,
       metric: SUPPORT_METRICS.memory[0].metric,
@@ -102,21 +102,21 @@ function BigScreen(props: IProps) {
   };
 
   // //* Set the polling status
-  // useEffect(() => {
-  //   if (pollingTimer) {
-  //     clearTimeout(pollingTimer);
-  //   }
-  //   pollingMachineStatus();
-  // }, [metricsFilterValues.timeRange, metricsFilterValues.frequency]);
+  useEffect(() => {
+    if (pollingTimer) {
+      clearTimeout(pollingTimer);
+    }
+    pollingMachineStatus();
+  }, [metricsFilterValues.timeRange, metricsFilterValues.frequency]);
 
-  // const pollingMachineStatus = () => { // It's a little trick, doesn't it?
-  //   getMachineStatus();
-  //   if (metricsFilterValues.frequency > 0) {
-  //     pollingTimer = setTimeout(() => {
-  //       pollingMachineStatus();
-  //     }, metricsFilterValues.frequency);
-  //   }
-  // };
+  const pollingMachineStatus = () => { // It's a little trick, doesn't it?
+    getMachineStatus();
+    if (metricsFilterValues.frequency > 0) {
+      pollingTimer = setTimeout(() => {
+        pollingMachineStatus();
+      }, metricsFilterValues.frequency);
+    }
+  };
 
   return (
     <Spin spinning={shouldRender}>
@@ -146,4 +146,4 @@ function BigScreen(props: IProps) {
   )
 }
 
-export default connect(null, mapDispatch)(BigScreen);
+export default connect(mapState, mapDispatch)(BigScreen);

@@ -21,7 +21,7 @@ export const MenuList = [
   {
     key: 'big-screen',
     title: 'Big Screen',
-    icon: '#iconnav-dashboard',
+    icon: '#iconnav-tvMode',
     path: '/big-screen',
   },
   {
