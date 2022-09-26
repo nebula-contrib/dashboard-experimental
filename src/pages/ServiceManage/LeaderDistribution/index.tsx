@@ -14,7 +14,7 @@ import classnames from 'classnames';
 import SelectSpace from '../SelectSpace';
 import './index.less';
 import { isCommunityVersion } from '@/utils';
-import { DEFAULT_VERSION } from '@/utils/dashboard';
+import { DEFAULT_VERSION, formatVersion } from '@/utils/dashboard';
 
 const mapDispatch: any = (dispatch: IDispatch) => ({
   asyncGetHostsInfo: dispatch.nebula.asyncGetHostsInfo,
@@ -23,8 +23,7 @@ const mapDispatch: any = (dispatch: IDispatch) => ({
 
 const mapState = (state: IRootState) => ({
   loading: state.loading.effects.nebula.asyncGetHostsInfo,
-  address: (state.nebula as any).address,
-  port: (state.nebula as any).port,
+  nebulaConnect: (state.nebula as any).nebulaConnect,
 });
 
 interface IProps
@@ -44,14 +43,14 @@ const LeaderDistribution: React.FC<IProps> = (props: IProps) => {
   const [data, setData] = useState<IChaerData[]>([]);
   const [chartInstance, setChartInstance] = useState<Chart>();
 
-  const { address, cluster = {}, port, loading, isOverview, baseRouter = '/management' } = props;
+  const { nebulaConnect, cluster = {}, loading, isOverview, baseRouter = '/management' } = props;
 
   useEffect(() => {
-    if (isCommunityVersion() || (address && port)) {
+    if (isCommunityVersion() || nebulaConnect) {
       getStorageInfo();
     }
     return () => setData([]);
-  }, [address, port]);
+  }, [nebulaConnect]);
 
   useEffect(() => {
     if (chartInstance) {
@@ -90,7 +89,7 @@ const LeaderDistribution: React.FC<IProps> = (props: IProps) => {
 
   const handleBalance = async () => {
     let code = -1;
-    if (compare(cluster?.version || DEFAULT_VERSION, 'v3.0.0', '<')) {
+    if (compare(formatVersion(cluster?.version || DEFAULT_VERSION), 'v3.0.0', '<')) {
       code = await props.asyncExecNGQL('BALANCE LEADER');
       if (code === 0) {
         message.success(intl.get('common.succeed'));
