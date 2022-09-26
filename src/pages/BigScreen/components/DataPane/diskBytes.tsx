@@ -4,17 +4,15 @@ import { Col, Row } from 'antd';
 import './index.less';
 import BigLineChart from '../../widgets/BigLineChart';
 
-function diskInfo() {
-    return (
-        <div className='disk-pane-info'>
-            <strong>数据盘信息</strong>
-            <p>IP: 192.168.8.60</p>
-        </div>
-    )
+interface IProps {
+    style?: any;
+    instanceList?: any;
 }
 
-export default function DiskBytes(props: any) {
-    const { style } = props;
+export default function DiskBytes(props: IProps) {
+    const { style, instanceList } = props;
+
+    const showList = instanceList.map(elem => elem.split(':')[0]);
 
     const [data, setData] = useState([]);
 
@@ -35,7 +33,10 @@ export default function DiskBytes(props: any) {
         <div className='disk-bytes-main' style={style}>
             {/* Curious why Row here not work */}
             <Row style={{ height: '33%' }}>
-                {diskInfo()}
+                <div className='disk-pane-info'>
+                    <strong>数据盘信息</strong>
+                    <p>IP: {showList}</p>
+                </div>
             </Row>
             <Row style={{ height: '33%' }}>
                 <div className='disk-read-bytes'>

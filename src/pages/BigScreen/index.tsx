@@ -24,6 +24,7 @@ const mapDispatch: any = (dispatch: any) => ({
 const mapState = (state: any) => ({
   metricsFilterValues: state.machine.metricsFilterValues,
   loading: state.loading.effects.machine.asyncGetMetricsData,
+  instanceList: state.machine.instanceList as any,
 })
 
 interface IProps
@@ -36,7 +37,7 @@ let pollingTimer: any;
 
 function BigScreen(props: IProps) {
   const { asyncGetCPUStateByRange, asyncGetMemoryStateByRange, asyncGetLoadByRange, updateMetricsFiltervalues,
-    metricsFilterValues, loading,
+    metricsFilterValues, loading, instanceList,
     cluster,
   } = props;
 
@@ -130,7 +131,9 @@ function BigScreen(props: IProps) {
 
           <Col span={14}>
             <Row style={{ height: '65%' }}>
-              <DataPane></DataPane>
+              <DataPane 
+              instanceList={instanceList}
+              />
             </Row>
             <Row style={{ height: '35%' }}>
               <HealthInfo></HealthInfo>
