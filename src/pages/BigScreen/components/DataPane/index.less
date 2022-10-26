@@ -1,0 +1,62 @@
+.data-pane-main {
+    width: 100%;
+    height: 98%;
+    display: flex;
+    padding-right: 10px;
+    background-color: rgb(11, 60, 88);
+    border-radius: 20px;
+    // flex layout could use the percent layout
+}
+
+.disk-bytes-main {
+    padding: 10px;
+    color: white;
+    text-align: center;
+    height:100%;
+
+    .disk-pane-info {
+        text-align: left;
+        margin: 15px;
+        height: 70%;
+        width: 100%;
+        strong {
+            font-size: 20px;
+        }
+    }
+
+    .disk-read-bytes {
+        margin-bottom: 5px;
+        height: 100%;
+        width: 100%; // Change here will change linechart's width, but not in center position
+    }
+
+    .disk-write-bytes {
+        margin-bottom: 5px;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.utilization-main {
+    height: 100%;
+    padding: 10px;
+    color: white;
+    text-align: center;
+
+    .utilization-cpu {
+        margin-bottom: 5px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .utilization-memory {
+        margin-bottom: 5px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .utilization-load {
+        width: 100%;
+        height: 100%;
+    }
+}
